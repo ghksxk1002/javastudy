@@ -9,6 +9,7 @@ public class Goodsapp {
 		goods.setPricare(200);
 		goods.setCountStock(10);
 		goods.setCountSold(20);
+		goods.showInfo();
 		
 		System.out.println(goods.toString());
 	}
