@@ -1,9 +1,16 @@
-package paint;
+package com.douzone.point;
+
+import com.douzone.inter.Drawable;
 
 public class Point implements Drawable {
 	private int x;
 	private int y;
 	
+		
+	public Point(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 	
 	public int getX() {
 		return x;

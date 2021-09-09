@@ -1,4 +1,4 @@
-package paint;
+package com.douzone.shape;
 
 public class Rectangle extends Shape {
 	private int X1, Y1;
