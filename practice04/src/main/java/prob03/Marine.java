@@ -6,7 +6,7 @@ public class Marine{
 	private int y;
 
 	void move(int x, int y) {
-		/* 지정된 위치로 이동 */
+		System.out.println("탱크가 ("+ x + "," + "y"+")로 이동하였습니다");
 	}
 
 	void stop() {
