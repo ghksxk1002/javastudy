@@ -33,6 +33,9 @@ public class Main {
 		//drawShape(circle);
 		draw(circle);
 		
+		GraphicText graphicText = new GraphicText("Hello World");
+		draw(graphicText);
+		
 	}
 	
 	public static void draw(Drawable drawable) {
