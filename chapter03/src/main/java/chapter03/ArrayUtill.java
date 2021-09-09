@@ -27,6 +27,11 @@ public class ArrayUtill {
 		
 		int[] New = new int[a3.length + a4.length];
 		
+		int index = 0;
+		
+		for(int i : a3) {
+			
+		}
 		
 		return null;
 	}

@@ -18,11 +18,7 @@ public class TV {
 
 	public void power(boolean on) {// 티비 전원상태
 
-		if (on) {
-			this.power = true;
-		} else {
-			this.power = false;
-		}
+		power = on;
 	}
 
 	public void volume(int volume) {// 볼륨조절
@@ -52,10 +48,20 @@ public class TV {
 			this.channel = 255;
 		}
 		
+		this.channel = channel;
+		
 	}
 
 	public void channel(boolean on) {
-		channel( on ? this.channel+1 : this.channel-1);
+		//channel( channel + (on ? 1 : -1)); 
+		//volume( on ? this.volume+1 : this.volume-1); 틀린예
+		if(on) {
+			channel(channel +1);
+		}
+		else {
+			channel(channel -1);
+		}
+	
 	}
 
 }

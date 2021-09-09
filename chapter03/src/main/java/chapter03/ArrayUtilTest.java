@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class ArrayUtilTest {
 
 	public static void main(String[] args) {
-		double[] di = ArrayUtill.intToDouble(new int[] {10,20,30,40,50});
+		double[] di = ArrayUtill.intToDouble(new int[] {10,20,30,40,50});//객체생성없이 메소드에 접근가능
 		
 		int[] a2 = ArrayUtill.doubleToInt(new double[] {10.1,20.2,30.3,40.4,50.5});
 		
