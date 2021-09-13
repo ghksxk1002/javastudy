@@ -6,6 +6,10 @@ public class Marine extends Unit{
 	private int y;
 
 	void move(int x, int y) {
+<<<<<<< HEAD
+=======
+		System.out.println("탱크가 ("+ x + "," + "y"+")로 이동하였습니다");
+>>>>>>> branch 'master' of https://github.com/ghksxk1002/javastudy.git
 	}
 
 	void stop() {
