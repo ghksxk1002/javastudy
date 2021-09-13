@@ -1,7 +1,7 @@
 package prob1;
 
 public class Sort {
-	
+	//practice01
 	public static void main(String[] arg) {
 	
 		int array[] = { 5, 9, 3, 8, 60, 20, 1 };
