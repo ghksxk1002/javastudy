@@ -1,23 +1,26 @@
 package prob5;
 
 public class MyStack {
-
-	public MyStack(int i) {
-		// TODO Auto-generated constructor stub
+	
+	
+	private String mystack;
+	
+	public MyStack(int mystack) {
+		System.out.print(mystack);
 	}
 
-	public void push(String string) {
-		// TODO Auto-generated method stub
+	public void push(String push) {
+		
 		
 	}
 
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	public String pop() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 }
