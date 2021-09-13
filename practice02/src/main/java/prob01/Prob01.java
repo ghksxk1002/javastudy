@@ -7,7 +7,7 @@ public class Prob01 {
 		Scanner scanner = new Scanner( System.in  );
 		int convert = 0;
 		final int[] MONEYS = { 50000, 10000, 5000, 1000, 500, 100, 50, 10, 5, 1 };
-		
+		//practice01
 		System.out.print("금액:");
 		int num = scanner.nextInt();
 		
