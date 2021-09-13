@@ -1,5 +1,5 @@
 package prob01;
-
+//practice0
 public class Member {
 	private String id;
 	private String name;
