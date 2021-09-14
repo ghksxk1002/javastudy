@@ -36,7 +36,15 @@ public class LoginMain {
 		}
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public static void login(List<User> users, User user ){
 		/* 코드 작성 */
+		if(users.equals(user)) {
+			return;
+		}else {
+			
+		}
+		
+		
 	}
 }
