@@ -8,13 +8,13 @@ public class Gugudan {
 
 	public static void main(String[] args) {
 		int l = randomize(1, 9);
-		int r = randomize(1, 9);
+		int r = randomize(1, 9);// l,r에 1`9까지 랜덤한 숫자 저장
 
 		resultNumber = l * r;
 
-		int[] answerNumbers = randomizeAnswers();
+		int[] answerNumbers = randomizeAnswers();//answerNumber 변수에 렌덤한값 저장
 		int loc = randomize(0, 8);
-		answerNumbers[loc] = resultNumber;
+		answerNumbers[loc] = resultNumber;//인자값 0`8까지 렌덤하게 l*r 값저장
 
 		System.out.println(l + " x " + r + " = ?");
 
@@ -46,8 +46,14 @@ public class Gugudan {
 
 	private static int[] randomizeAnswers() {
 		/* 코드 작성(수정 가능) */
+		
+		
 		final int COUNT_ANSWER_NUMBER = 9;
 		int[] boardNumbers = new int[COUNT_ANSWER_NUMBER];
+		for(int i = 0; i < COUNT_ANSWER_NUMBER; i++ ) {
+			boardNumbers[i] = randomize(1, 9);
+		}
+		
 		return boardNumbers;
 	}
 }

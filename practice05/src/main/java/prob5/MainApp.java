@@ -11,7 +11,7 @@ public class MainApp {
 			stack.push("java");
 			stack.push(".");
 
-			while (stack.isEmpty() == false) {
+			while (stack.isEmpty() == false) {//동적으로 늘리는 일을 해야한다.
 				String s = stack.pop();
 				System.out.println( s );
 			}
