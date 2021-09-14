@@ -1,7 +1,7 @@
 package prob01;
 
 import java.util.Scanner;
-//hashset 사용 심화
+//hashset 사용 심화였음
 public class Gugudan {
 
 	static int resultNumber = 0;
