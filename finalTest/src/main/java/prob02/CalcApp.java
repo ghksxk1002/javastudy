@@ -29,7 +29,11 @@ public class CalcApp {
 			Arithmetic arithmetic = null;
 			
 			/* 코드 작성 */
+			@SuppressWarnings("null")
 			int result = arithmetic.calculate(lValue, rValue);
+			String lastVal= tokens[3];
+			if(lastVal == "+") {
+			}
 			System.out.println( ">> " + result );
 		}
 		
