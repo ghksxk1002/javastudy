@@ -23,9 +23,7 @@ public class TCPServer {
 			// 3. accpet
 			// 클라이언트로 부터 연결 요청을 기다린다.
 			Socket socket = serverSocket.accept();
-			InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();// 상대방의
-																											// 소켓어드레스를
-																											// 가져와라
+			InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();																							
 			String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 			int remoteHostPort = inetRemoteSocketAddress.getPort();
 			System.out.println("[server] connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
@@ -46,11 +44,11 @@ public class TCPServer {
 						System.out.println("[sever] closed by client");
 						break;// 버퍼가 다 비게되면 브레이크하고 while문을 빠져나간다
 					}
-					String data = new String(buffer, 0, readByteCount, "utf-8");
+					String data = new String(buffer, 0, readByteCount, "UTF-8");
 					System.out.println("[sever] received : " + data);
 					
 					//6. 데이트쓰기
-					os.write(data.getBytes("utf - 8"));
+					os.write(data.getBytes("UTF-8"));//인코딩시 오타를 조심하자
 					
 				}
 
