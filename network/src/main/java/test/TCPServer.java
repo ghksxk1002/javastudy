@@ -48,6 +48,10 @@ public class TCPServer {
 					}
 					String data = new String(buffer, 0, readByteCount, "utf-8");
 					System.out.println("[sever] received : " + data);
+					
+					//6. 데이트쓰기
+					os.write(data.getBytes("utf - 8"));
+					
 				}
 
 			} catch (SocketException e) {
