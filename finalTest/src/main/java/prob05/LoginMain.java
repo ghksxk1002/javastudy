@@ -41,7 +41,9 @@ public class LoginMain {
 		for(User list : users) {
 			if(list.equals(user)) {
 				new UserNotFoundException();
+				continue;
 			}
+			if()
 		}
 		
 		

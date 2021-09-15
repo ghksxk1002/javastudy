@@ -8,7 +8,7 @@ public class LocalHost {//로칼호스트는 프로그램이 돌고있는 컴퓨
 	public static void main(String[] args) {
 		//인터넷어래스 : InetAddress
 		try {
-			InetAddress inetaddress = InetAddress.getLocalHost();
+			InetAddress inetaddress = InetAddress.getLocalHost();//로컬호스트주소 가져오기
 			
 			String name = inetaddress.getHostName();//호스트 네임
 			String hostaddress = inetaddress.getHostAddress();
