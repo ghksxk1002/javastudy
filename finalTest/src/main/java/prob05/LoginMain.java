@@ -27,23 +27,24 @@ public class LoginMain {
 			System.out.println("로그인 성공");
 		} catch (UserNotFoundException ex) {
 			System.out.println("사용자를 찾을 수 없습니다.");
-			return;
 		} catch (PasswordDismatchException ex) {
 			System.out.println("비밀번호가 틀렸습니다.");
-			return;
 		} finally {
 			scanner.close();
 		}
 	}
 
-	public static void login(List<User> users, User user) throws UserNotFoundException, PasswordDismatchException{
+	public static void login(List<User> users, User user) {
 		/* 코드 작성 */
-		for(User list : users) {
-			if(list.equals(user)) {
-				new UserNotFoundException();
-				continue;
+		for(User userList : users) {
+			if(!userList.getId().equals(user.getId())) {
+				throw new UserNotFoundException();
+			} 
+			if(!userList.getPassword().equals(user.getPassword())) {
+				throw new PasswordDismatchException();
+			} else {
+				return;
 			}
-			if()
 		}
 		
 		
