@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class EchoClient {
 	private static final String SERVER_IP = "127.0.0.1";
-	private static final int SEVER_PORT = 6000;
+	private static final int SERVER_PORT = 6000;
 
 	public static void main(String[] args) {
 
@@ -21,7 +21,7 @@ public class EchoClient {
 		try {
 			scanner = new Scanner(System.in);
 			socket = new Socket();
-			socket.connect(new InetSocketAddress(SERVER_IP, SEVER_PORT));
+			socket.connect(new InetSocketAddress(SERVER_IP, SERVER_PORT));
 			log("connected");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));

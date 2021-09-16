@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EchoServer {
-	private static final int SEVER_PORT = 6000;
+	private static final int SERVER_PORT = 6000;
 
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
@@ -15,7 +15,7 @@ public class EchoServer {
 			serverSocket = new ServerSocket();
 			
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", 6000));
-			log("STARTS... [port: " + SEVER_PORT + " ]");// 서버가 6000번으로 시작되었다
+			log("STARTS... [port: " + SERVER_PORT + " ]");// 서버가 6000번으로 시작되었다
 			
 			
 			while (true) {
@@ -54,7 +54,7 @@ public class EchoServer {
 //					e.printStackTrace();
 //				}
 //			}
-//
+
 		} catch (IOException e) {
 			log("error:" + e);
 		} finally {
