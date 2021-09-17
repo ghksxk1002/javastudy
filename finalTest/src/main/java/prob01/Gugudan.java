@@ -1,6 +1,5 @@
 package prob01;
 
-import java.util.HashSet;
 import java.util.Scanner;
 
 //hashset 사용 심화
@@ -40,29 +39,32 @@ public class Gugudan {
 
 		System.out.println((answer == resultNumber) ? "정답" : "오답");
 	}
-
+//
 	private static int randomize(int lNum, int rNum) {
 		int random = (int) (Math.random() * rNum) + lNum;
 		return random;
 	}
 
-	private static int[] randomizeAnswers() {
+	private static int[] randomizeAnswers(){
 		/* 코드 작성(수정 가능) */
-		HashSet<Integer> rNums = new HashSet<>();
+		//이렇게도 풀수있구나
 		final int COUNT_ANSWER_NUMBER = 9;
 		int[] boardNumbers = new int[COUNT_ANSWER_NUMBER];
-
-		while (rNums.size() < COUNT_ANSWER_NUMBER) {
-			int l = randomize(1, 9);
-			int r = randomize(1, 9);
-			rNums.add(l * r);
+		int i = 0;
+		while(i < COUNT_ANSWER_NUMBER) {
+			int rNums = randomize(1,9)*randomize(1,9);
+			boolean checkNum = false;
+			for(int j = 0; j <COUNT_ANSWER_NUMBER; j++) {
+				if(rNums == boardNumbers[j] || rNums == resultNumber) {//resultNumber : 클래스의 전역변수이기 때문에 사용가능
+					checkNum = true;
+					break;
+				}
+			}
+			if(!checkNum) {
+				boardNumbers[i++] = rNums;
+			}
+			
 		}
-		for(int rNum : rNums) {
-			int i = 0;
-			boardNumbers[++i] = rNum;
-			System.out.println(rNum + " "+boardNumbers[i]);
-		}
-	//모르겠다
 		return boardNumbers;
 	}
 }
