@@ -29,7 +29,7 @@ public class ChatServer {
 		} catch (IOException e) {
 			log("error:" + e);
 		} finally {
-			if (serverSocket != null && serverSocket.isClosed()) {
+			if (serverSocket != null && serverSocket.isClosed() == false) {
 				try {
 					serverSocket.close();
 				} catch (IOException e) {
@@ -40,7 +40,7 @@ public class ChatServer {
 
 	}
 
-	static void log(String log) {
+	public static void log(String log) {
 		System.out.println("[chatServer] " + log);
 
 	}

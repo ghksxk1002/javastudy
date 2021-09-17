@@ -22,10 +22,13 @@ public class ChatClientThread extends Thread {
 		int remoteHostPort = inetRemoteSocketAddress.getPort();
 
 		try {
+
 			while (true) {
 				String response = br.readLine();
+				System.out.println(response);
+
 				if (response == null) {
-					log("서버로부터 연결이 끊어졌습니다" + "[" + remoteHostAddress + ":" + remoteHostPort + "]");
+					ChatClient.log("서버로부터 연결이 끊어졌습니다" + "[" + remoteHostAddress + ":" + remoteHostPort + "]");
 					break;
 				}
 
@@ -41,6 +44,15 @@ public class ChatClientThread extends Thread {
 
 		} catch (IOException e) {
 			log("error : " + e);
+		} finally {
+			try {
+				if (socket != null && socket.isClosed() == false) {
+					socket.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

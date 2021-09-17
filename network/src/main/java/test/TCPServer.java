@@ -16,10 +16,13 @@ public class TCPServer {
 		try {
 			// 1. 서버소켓생성
 			serverSocket = new ServerSocket();
+			// 1-1. TIME_WAIT 상태에서도 소켓 포트 번호 할당이 사능하도록 하기 위해서...
+			serverSocket.setReuseAddress(true);//서버가 close가 되어도
+			
 			// 2. 바인딩(binding) => 이소켓에다가 ip와 소켓을 연결시켜주는것
 			// socket에 InetSocketAdderss(IPAdress+port)
 			// IPAdress : 0.0.0.0 : =>모든 IP로 부터의 연결을 허용하는 것이다.
-			serverSocket.bind(new InetSocketAddress("0.0.0.0", 5000));
+			serverSocket.bind(new InetSocketAddress("0.0.0.0", 5000), 10);//10은백로그 넘버
 			// 3. accpet
 			// 클라이언트로 부터 연결 요청을 기다린다.
 			Socket socket = serverSocket.accept();
@@ -48,7 +51,14 @@ public class TCPServer {
 					System.out.println("[sever] received : " + data);
 					
 					//6. 데이트쓰기
-					os.write(data.getBytes("UTF-8"));//인코딩시 오타를 조심하자
+					try {
+						Thread.sleep(2000);
+						os.write(data.getBytes("UTF-8"));//인코딩시 오타를 조심하자
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					
 				}
 

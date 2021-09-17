@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 
 public class ChatServerThread extends Thread {
@@ -28,7 +29,7 @@ public class ChatServerThread extends Thread {
 		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
 		String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 		int remoteHostPort = inetRemoteSocketAddress.getPort();
-		log("connected by client[ " + remoteHostAddress + ":" + remoteHostPort + " ]");
+		ChatServer.log("connected by client[ " + remoteHostAddress + ":" + remoteHostPort + " ]");
 
 		try {
 			// IOStream(inputoutputStream)
@@ -41,7 +42,7 @@ public class ChatServerThread extends Thread {
 				request = br.readLine();// 클라이언트 요청 버터에서 라인으로 읽어오기
 
 				if (request == null) {// 요청이 없으면
-					log("클라이언트로 부터 연결 끊김");
+					ChatServer.log("클라이언트로 부터 연결 끊김");
 					doQuit(pw);
 					break;
 				}
@@ -61,19 +62,23 @@ public class ChatServerThread extends Thread {
 
 				} else {
 
-					log("에러:알수 없는 요청(" + tokens[0] + ")");
+					ChatServer.log("에러:알수 없는 요청(" + tokens[0] + ")");
 				}
 
 			}
+
+		} catch (SocketException e) {
+			System.out.println("[server error] suddenly closed by client");
+			doQuit(pw);
 		} catch (IOException e) {
 			ChatServer.log("error:" + e);
 		} finally {
-			if (socket != null && socket.isClosed()) {
-				try {
+			try {
+				if (socket != null && socket.isClosed()) {
 					socket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -88,14 +93,14 @@ public class ChatServerThread extends Thread {
 		addWriter(pw);
 
 		// ack
-		pw.println("join:채팅방에 들어왔습니다");
+		pw.println(data);
 		pw.flush();
 
 	}
 
-	private void addWriter(Writer pw) {
+	private void addWriter(Writer writer) {
 		synchronized (listWriters) {
-			listWriters.add(pw);
+			listWriters.add(writer);
 		}
 
 	}
@@ -119,7 +124,6 @@ public class ChatServerThread extends Thread {
 
 	private void doQuit(Writer writer) {
 		removeWriter(writer);
-
 		String data = nickname + "님이 퇴장 하였습니다.";
 		broadcast(data);
 	}
@@ -130,9 +134,4 @@ public class ChatServerThread extends Thread {
 			listWriters.remove(writer);
 		}
 	}
-
-	private void log(String log) {
-		System.out.println("[chatServerThread] " + log);
-	}
-
 }

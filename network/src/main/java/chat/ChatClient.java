@@ -37,19 +37,26 @@ public class ChatClient {
 
 			// 6. ChatClientReceiveThread 시작
 
-			new ChatClientThread(socket,br).start();
+			ChatClientThread chatClientThread = new ChatClientThread(socket,br);
+			chatClientThread.start();
 
 			// 7. 키보드 입력 처리
 
 			while (true) {
 
 				System.out.print(">>");
-				String input = scanner.nextLine();
+				String input = scanner.nextLine();//키보드로 입력된값을 한줄로 저장
 
 				if ("quit".equals(input) == true) {
 					// 8. quit 프로토콜 처리
-					pw.println("quit:");
+					pw.println(input);
 					pw.flush();
+					try {
+						chatClientThread.join();
+					
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					break;
 				} else {
 					// 9. 메시지 처리
@@ -58,20 +65,26 @@ public class ChatClient {
 			}
 
 		} catch (SocketException e) {
-			log("suddenly closed by server");
+			log("server is not open");
 		} catch (IOException e) {
 			log("error:" + e);
-		} finally {
-
-			if (scanner != null) {
-				scanner.close();
+		}  finally {
+			try {
+				if( scanner != null) {
+					scanner.close();
+				}
+				if (socket != null && socket.isClosed() == false) {
+					socket.close();
+				}
+			} catch (IOException e) {
+				
+				e.printStackTrace();
 			}
-
 		}
 
 	}
 
-	private static void log(String log) {
+	public static void log(String log) {
 		System.out.println("[chatClient] " + log);
 	}
 
