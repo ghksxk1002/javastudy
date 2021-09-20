@@ -59,6 +59,7 @@ public class ChatServerThread extends Thread {
 				} else if ("quit".equals(tokens[0])) {
 
 					doQuit(pw);
+					break;
 
 				} else {
 
@@ -68,17 +69,31 @@ public class ChatServerThread extends Thread {
 			}
 
 		} catch (SocketException e) {
+
 			System.out.println("[server error] suddenly closed by client");
 			doQuit(pw);
+
 		} catch (IOException e) {
+
 			ChatServer.log("error:" + e);
+
 		} finally {
 			try {
-				if (socket != null && socket.isClosed()) {
+
+				if (socket != null && socket.isClosed() == false) {
 					socket.close();
+					ChatServer.log("클라이언트로부터 연결이 끊어졌습니다." + "[" + remoteHostAddress + ":" + remoteHostPort + "]");
+				}
+				if (br != null) {
+					br.close();
+				}
+				if (pw != null) {
+					pw.close();
 				}
 			} catch (IOException e) {
+
 				e.printStackTrace();
+
 			}
 		}
 	}

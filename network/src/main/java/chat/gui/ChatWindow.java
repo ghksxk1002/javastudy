@@ -81,7 +81,7 @@ public class ChatWindow {
 		/**
 		 * 2. IOStream 가져오기
 		 */
-		socket.
+		//socket.
 
 		/**
 		 * 3. Chat Client Thread 생성

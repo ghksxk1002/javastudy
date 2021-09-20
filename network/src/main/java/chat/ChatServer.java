@@ -14,6 +14,7 @@ public class ChatServer {
 
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
+		Socket socket = null;
 		try {
 			// 서버소켓생성
 			serverSocket = new ServerSocket();
@@ -22,22 +23,26 @@ public class ChatServer {
 			log("채팅방이열렸습니다... [port: " + PORT + " ]");// 서버가 6000번으로 시작되었다
 
 			while (true) {
-				Socket socket = serverSocket.accept();// 바인딩 끝난후 클라이언트와 connect 되길 기다림
+				socket = serverSocket.accept();// 바인딩 끝난후 클라이언트와 connect 되길 기다림
 				new ChatServerThread(socket, listWriters).start();
 			}
 
 		} catch (IOException e) {
 			log("error:" + e);
 		} finally {
-			if (serverSocket != null && serverSocket.isClosed() == false) {
-				try {
+
+			try {
+				if (serverSocket != null && serverSocket.isClosed() == false) {
 					serverSocket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
+
+				if (socket != null && !socket.isClosed()) {
+					socket.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-
 	}
 
 	public static void log(String log) {

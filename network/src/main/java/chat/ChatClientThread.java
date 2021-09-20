@@ -44,15 +44,6 @@ public class ChatClientThread extends Thread {
 
 		} catch (IOException e) {
 			log("error : " + e);
-		} finally {
-			try {
-				if (socket != null && socket.isClosed() == false) {
-					socket.close();
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
