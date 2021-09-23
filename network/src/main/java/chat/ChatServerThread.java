@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.List;
 
 public class ChatServerThread extends Thread {
@@ -42,7 +41,7 @@ public class ChatServerThread extends Thread {
 				request = br.readLine();// 클라이언트 요청 버터에서 라인으로 읽어오기
 
 				if (request == null) {// 요청이 없으면
-					ChatServer.log("클라이언트로 부터 연결 끊김");
+					ChatServer.log("disconnected by client[ " + remoteHostAddress + ":" + remoteHostPort + " ]");
 					doQuit(pw);
 					break;
 				}
@@ -68,14 +67,9 @@ public class ChatServerThread extends Thread {
 
 			}
 
-		} catch (SocketException e) {
-
-			System.out.println("[server error] suddenly closed by client");
-			doQuit(pw);
-
 		} catch (IOException e) {
-
-			ChatServer.log("error:" + e);
+			doQuit(pw);
+			ChatServer.log("error: suddenly closed by client");
 
 		} finally {
 			try {

@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Scanner;
+
 //,,
 public class ChatClient {
 	private static final String SERVER_IP = "127.0.0.1";
@@ -27,17 +28,17 @@ public class ChatClient {
 			// 3. 연결
 			socket.connect(new InetSocketAddress(SERVER_IP, SERVER_PORT));
 			// 4. reader/writer 생성
-			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));// 읽기
+			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);// 쓰기
 
 			// 5. join 프로토콜
 			System.out.print("닉네임>>");
-			nickname= scanner.nextLine();
+			nickname = scanner.nextLine();
 			pw.println("join:" + nickname);
 
 			// 6. ChatClientReceiveThread 시작
 
-			ChatClientThread chatClientThread = new ChatClientThread(socket,br);
+			ChatClientThread chatClientThread = new ChatClientThread(socket, br);
 			chatClientThread.start();
 
 			// 7. 키보드 입력 처리
@@ -45,18 +46,12 @@ public class ChatClient {
 			while (true) {
 
 				System.out.print(">>");
-				String input = scanner.nextLine();//키보드로 입력된값을 한줄로 저장
+				String input = scanner.nextLine();// 키보드로 입력된값을 한줄로 저장
 
-				if ("quit".equals(input) == true) {
+				if ("quit".equals(input)) {
 					// 8. quit 프로토콜 처리
-					pw.println(input);
+					pw.println("quit:" + input);
 					pw.flush();
-					try {
-						chatClientThread.join();
-					
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					break;
 				} else {
 					// 9. 메시지 처리
@@ -67,17 +62,22 @@ public class ChatClient {
 		} catch (SocketException e) {
 			log("server is not open");
 		} catch (IOException e) {
-			log("error:" + e);
-		}  finally {
+			log("error : " + "suddenly closed by server");
+		} finally {
+			if (scanner != null) {
+				scanner.close();
+			}
 			try {
-				if( scanner != null) {
-					scanner.close();
-				}
-				if (socket != null && socket.isClosed() == false) {
+				if (socket != null && !socket.isClosed()) {
 					socket.close();
 				}
+				if (br != null) {
+					br.close();
+				}
+				if (pw != null) {
+					pw.close();
+				}
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 		}
