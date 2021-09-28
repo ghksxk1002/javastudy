@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EchoServer {
-	private static final int SERVER_PORT = 6000;
+	private static final int SERVER_PORT = 7000;
 
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
