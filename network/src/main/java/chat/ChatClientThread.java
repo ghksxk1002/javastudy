@@ -2,7 +2,6 @@ package chat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class ChatClientThread extends Thread {
@@ -16,21 +15,11 @@ public class ChatClientThread extends Thread {
 
 	@Override
 	public void run() {
-		// Remote Host Information
-		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
-		String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
-		int remoteHostPort = inetRemoteSocketAddress.getPort();
 
 		try {
 
 			while (true) {
 				String response = br.readLine();
-				System.out.println(response);
-
-				if (response == null) {
-					ChatClient.log("서버로부터 연결이 끊어졌습니다" + "[" + remoteHostAddress + ":" + remoteHostPort + "]");
-					break;
-				}
 
 				String[] tokens = response.split(":");
 				if ("join".equals(tokens[0])) {
@@ -43,7 +32,7 @@ public class ChatClientThread extends Thread {
 			}
 
 		} catch (IOException e) {
-			log("error : " + e);
+			log("서버로부터 연결이 끊겼습니다");
 		}
 	}
 
@@ -61,7 +50,7 @@ public class ChatClientThread extends Thread {
 	}
 
 	private void log(String log) {
-		System.out.println("[ClientThread] " + log);
+		System.out.println("[Client] " + log);
 	}
 
 }

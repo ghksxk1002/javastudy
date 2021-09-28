@@ -9,7 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Scanner;
-//,,
+//,,,,
 public class ChatClient {
 	private static final String SERVER_IP = "127.0.0.1";
 	private static final int SERVER_PORT = 6000;
@@ -49,7 +49,7 @@ public class ChatClient {
 
 				if ("quit".equals(input) == true) {
 					// 8. quit 프로토콜 처리
-					pw.println(input);
+					pw.println("quit:");
 					pw.flush();
 					try {
 						chatClientThread.join();
@@ -76,7 +76,7 @@ public class ChatClient {
 				if (socket != null && socket.isClosed() == false) {
 					socket.close();
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				
 				e.printStackTrace();
 			}

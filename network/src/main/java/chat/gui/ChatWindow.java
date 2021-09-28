@@ -14,18 +14,25 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 
 public class ChatWindow {
-	private BufferedReader br = null;
-	private PrintWriter pw = null;
 	private Frame frame;
 	private Panel pannel;
 	private Button buttonSend;
 	private TextField textField;
 	private TextArea textArea;
 
-	public ChatWindow(String name) {
+	private Socket socket;
+	private static BufferedReader br;
+	private static PrintWriter pw;
+
+	public ChatWindow(String name, Socket socket, BufferedReader br, PrintWriter pw) {
+		ChatWindow.br = br;
+		ChatWindow.pw = pw;
+		this.socket = socket;
 		frame = new Frame(name);
 		pannel = new Panel();
 		buttonSend = new Button("Send");
@@ -81,21 +88,33 @@ public class ChatWindow {
 		/**
 		 * 2. IOStream 가져오기
 		 */
-		//socket.
+
+		// socket.
 
 		/**
 		 * 3. Chat Client Thread 생성
 		 */
+		new ChatClientThread().start();
 	}
 
 	private void sendMessage() {
 		String message = textField.getText();
-		System.out.println("메세지 보내는 프로토콜 구현:" + message);
-		textField.setText("");
-		textField.requestFocus();
+		if ("quit".equals(message)) {
 
+			// 서버에게 quit 전송
+			pw.println("quit");
+			pw.flush();
+			finish();
+
+		} else {
+			if ("".equals(message)) {
+				message = "";
+			}
+			pw.println("message:" + message);
+		}
+		textField.setText("");
 		// Receive Thread 에서 서버로 부터 받은 메세지가 있다고 치고~(가짜데이터)
-		updateTextArea("마이콜:" + message);
+		updateTextArea(frame + message);
 	}
 
 	private void updateTextArea(String message) {
@@ -104,13 +123,65 @@ public class ChatWindow {
 	}
 
 	private void finish() {
-		System.out.println("소켓 닫기 or 방나가기 프로토콜 구현!");
 		System.exit(0);
 	}
 
 	private class ChatClientThread extends Thread {
+
 		public void run() {
-			updateTextArea(".....");
+			try {
+				while (true) {
+					String response = br.readLine();
+					// Client가 quit 입력 시 서버의 pw리스트에서 삭제되어 응답을 못받을 경우 종료
+					if (response == null) {
+						break;
+					}
+					// 수신 프로토콜 분석
+					String[] tokens = response.split(":");
+					if ("join".equals(tokens[0])) {
+						echoJoin(tokens[1]);
+					} else if ("message".equals(tokens[0])) {
+						echoMessage(tokens[1], tokens[2]);
+					} else if ("quit".equals(tokens[0])) {
+						echoQuit(tokens[1]);
+					}
+				}
+			} catch (IOException e) {
+				log("error : " + e);
+			} finally {
+				try {
+					if (br != null) {
+						br.close();
+					}
+
+					if (pw != null) {
+						pw.close();
+					}
+
+					if (socket != null && !socket.isClosed()) {
+						socket.close();
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		private void echoQuit(String msg) {
+			updateTextArea(msg);
+		}
+
+		private void echoJoin(String msg) {
+			updateTextArea(msg);
+		}
+
+		private void echoMessage(String nickName, String msg) {
+			updateTextArea(nickName + msg);
+		}
+
+		private void log(String log) {
+			System.out.println("[ClientThread] " + log);
 		}
 	}
 }
